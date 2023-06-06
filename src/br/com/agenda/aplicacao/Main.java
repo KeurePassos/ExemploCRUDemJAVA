@@ -75,15 +75,29 @@ public static void main(String[] args) {
     int idade = input.nextInt();
     input.nextLine(); // Consumir a quebra de linha deixada pelo nextInt()
 
+    System.out.println("Digite o email do contato:");
+    String email = input.nextLine();
+    
+    System.out.println("Digite o telefone do contato:");
+    String telefone = input.nextLine();
+    
+    System.out.println("Digite o endereco do contato:");
+    String endereco = input.nextLine();
+    
+    
+    
     // Criar o objeto Contato com os dados fornecidos pelo usuário
     Contato contato = new Contato();
     contato.setNome(nome);
     contato.setIdade(idade);
+    contato.setEmail(email);   
+    contato.setTelefone(telefone);
+    contato.setEndereco(endereco);
     contato.setDataCadastro(new Date());
 
     // Salvar o contato no banco de dados
     contatoDao.save(contato);
-
+System.out.println("Finalizado!");
     // Fechar o objeto Scanner
     input.close();
 }

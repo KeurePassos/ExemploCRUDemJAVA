@@ -20,7 +20,7 @@ public class ContatoDAO {
 @SuppressWarnings("unchecked")
 public <PreparedStatement> void save(Contato contato) {
 
-    String sql = "INSERT INTO contatos(nome, idade, datacadastro) VALUES (?, ?, ?)";
+    String sql = "INSERT INTO contatos(nome, idade, datacadastro, email, telefone, endereco) VALUES (?, ?, ?, ?, ?, ?)";
 
     Connection conn = null;
     PreparedStatement pstm = null;
@@ -35,6 +35,9 @@ public <PreparedStatement> void save(Contato contato) {
         ((java.sql.PreparedStatement) pstm).setString(1, contato.getNome());
         ((java.sql.PreparedStatement) pstm).setInt(2, contato.getIdade());
         ((java.sql.PreparedStatement) pstm).setDate(3, new Date(contato.getDataCadastro().getTime()));
+        ((java.sql.PreparedStatement) pstm).setString(4, contato.getEmail());
+        ((java.sql.PreparedStatement) pstm).setString(5, contato.getTelefone());
+        ((java.sql.PreparedStatement) pstm).setString(6, contato.getEndereco());
 
         // Executar a query
         ((java.sql.PreparedStatement) pstm).execute();
@@ -60,7 +63,7 @@ public <PreparedStatement> void save(Contato contato) {
 }
 
 public void update (Contato contato) {
-    String sql = "UPDATE contatos SET nome = ?, idade =?, datacadastro = ?" + "WHERE id = ?";
+    String sql = "UPDATE contatos SET nome = ?, idade = ?, datacadastro = ?, email = ?, telefone = ?, endereco = ?" + "WHERE id = ?";
 
     Connection conn = null;
     java.sql.PreparedStatement pstm = null;
@@ -71,10 +74,12 @@ public void update (Contato contato) {
         pstm = (java.sql.PreparedStatement) conn.prepareStatement(sql);
 
         pstm.setString(1, contato.getNome());
-        pstm.setInt(2, contato.getId());
+        pstm.setInt(2, contato.getIdade());
         pstm.setDate(3, new Date(contato.getDataCadastro().getTime()));
-
-        pstm.setInt(4, contato.getId());
+        pstm.setString(4, contato.getEmail());
+        pstm.setString(5, contato.getTelefone());
+        pstm.setString(6, contato.getEndereco());
+        pstm.setInt(7, contato.getId());
 
         pstm.execute();
 
@@ -160,6 +165,12 @@ public List<Contato> getContatos(){
             contato.setId(rset.getInt("idade"));
             //Recuperar a data de cadastrado
             contato.setDataCadastro(rset.getDate("datacadastro"));
+          //Recuperar o email
+            contato.setEmail(rset.getString("email"));
+          //Recuperar o nome
+            contato.setTelefone(rset.getString("telefone"));
+          //Recuperar o nome
+            contato.setEndereco(rset.getString("endereco"));
 
             contatos.add(contato);
 
